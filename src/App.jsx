@@ -3,9 +3,9 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 
-const GAS_URL = 'https://script.google.com/macros/s/AKfycby4No_Yd3lOZ90h4SnwFEohUD_99_q3khqsb8raPeUCQl7bX63R81FCjueejU--GP1O/exec'; // PASTE URL WEB APP ANDA DI SINI
+// const GAS_URL = 'https://script.google.com/macros/s/AKfycby4No_Yd3lOZ90h4SnwFEohUD_99_q3khqsb8raPeUCQl7bX63R81FCjueejU--GP1O/exec'; // PASTE URL WEB APP ANDA DI SINI
 
-// const GAS_URL = '/api/gas'; // PASTE URL WEB APP ANDA DI SINI
+const GAS_URL = '/api/gas'; // PASTE URL WEB APP ANDA DI SINI
 
 const postToGas = async (payload, actionLabel = 'permintaan') => {
   const response = await fetch(GAS_URL, {
