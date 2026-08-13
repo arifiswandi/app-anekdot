@@ -10,9 +10,9 @@ const GAS_URL = '/api/gas'; // PASTE URL WEB APP ANDA DI SINI
 const postToGas = async (payload, actionLabel = 'permintaan') => {
   const response = await fetch(GAS_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'text/plain;charset=UTF-8',
-    },
+    // headers: {
+    //   'Content-Type': 'text/plain;charset=UTF-8',
+    // },
     body: JSON.stringify(payload),
   });
 
