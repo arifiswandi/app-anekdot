@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 
@@ -9,10 +9,7 @@ const GAS_URL = 'https://script.google.com/macros/s/AKfycby4No_Yd3lOZ90h4SnwFEoh
 
 const postToGas = async (payload, actionLabel = 'permintaan') => {
   const response = await fetch(GAS_URL, {
-    method: 'POST',
-    // headers: {
-    //   'Content-Type': 'text/plain;charset=UTF-8',
-    // },
+    method: 'POST',    
     body: JSON.stringify(payload),
   });
 
@@ -58,7 +55,7 @@ export default function App() {
   }, [user]);
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Navigate to={user ? '/dashboard' : '/login'} replace />} />
         <Route
@@ -71,6 +68,6 @@ export default function App() {
         />
         <Route path="*" element={<Navigate to={user ? '/dashboard' : '/login'} replace />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
