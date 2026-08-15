@@ -1,6 +1,6 @@
 import React from 'react';
-import Dashboard from '../components/Dashboard';
+import { RecordsDashboard } from '../features/records';
 
 export default function DashboardPage({ user, onLogout, postToGas }) {
-  return <Dashboard user={user} onLogout={onLogout} postToGas={postToGas} />;
+  return <RecordsDashboard user={user} onLogout={onLogout} postToGas={postToGas} />;
 }
