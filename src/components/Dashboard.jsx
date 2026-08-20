@@ -372,9 +372,9 @@ export default function Dashboard({ user, onLogout, postToGas }) {
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                {loading ? <p className="status-text">Memuat data...</p> : (
                 <tbody>
-                  {records.map((r, index) => (
+                {loading ? <p className="status-text">Memuat data...</p> : (
+                  records.map((r, index) => (
                     <tr key={index}>
                       <td>{formatDateForInput(r.Tanggal)}</td>
                       <td>{r.NamaSiswa}</td>
@@ -395,9 +395,9 @@ export default function Dashboard({ user, onLogout, postToGas }) {
                         </div>
                       </td>
                     </tr>
-                  ))}
-                </tbody>
+                  ))
                 )}
+                </tbody>
               </table>
             </div>
           
