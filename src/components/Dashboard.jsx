@@ -359,7 +359,7 @@ export default function Dashboard({ user, onLogout, postToGas }) {
             </div>
           </div>
 
-          {loading ? <p className="status-text">Memuat data...</p> : (
+          
             <div className="table-wrap">
               <table>
                 <thead>
@@ -372,6 +372,7 @@ export default function Dashboard({ user, onLogout, postToGas }) {
                     <th>Aksi</th>
                   </tr>
                 </thead>
+                {loading ? <p className="status-text">Memuat data...</p> : (
                 <tbody>
                   {records.map((r, index) => (
                     <tr key={index}>
@@ -396,9 +397,10 @@ export default function Dashboard({ user, onLogout, postToGas }) {
                     </tr>
                   ))}
                 </tbody>
+                )}
               </table>
             </div>
-          )}
+          
         </div>
       </div>
 
