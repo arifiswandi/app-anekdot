@@ -1,17 +1,15 @@
 import { useState, useEffect } from 'react';
 import { SESSION_KEY } from '../constants/storage';
 
-const readStoredUser = () => {
-  try {
-    const stored = sessionStorage.getItem(SESSION_KEY);
-    return stored ? JSON.parse(stored) : null;
-  } catch {
-    return null;
-  }
-};
-
 export const useStoredUser = () => {
-  const [user, setUser] = useState(() => readStoredUser());
+  const [user, setUser] = useState(() => {
+    try {
+      const storedUser = sessionStorage.getItem(SESSION_KEY);
+      return storedUser ? JSON.parse(storedUser) : null;
+    } catch {
+      return null;
+    }
+  });
 
   useEffect(() => {
     if (user) {

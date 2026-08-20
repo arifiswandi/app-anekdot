@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
@@ -7,14 +7,6 @@ import { useStoredUser } from './hooks/useStoredUser';
 
 export default function App() {
   const [user, setUser] = useStoredUser();
-
-  useEffect(() => {
-    if (user) {
-      sessionStorage.setItem('bk-user', JSON.stringify(user));
-    } else {
-      sessionStorage.removeItem('bk-user');
-    }
-  }, [user]);
 
   return (
     <HashRouter>

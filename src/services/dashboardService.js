@@ -38,11 +38,11 @@ export const deleteRecord = async (postToGas, id) => {
   return data;
 };
 
-export const importRecordsFromExcel = async (postToGas, file, normalizeImportedRecord) => {
-  const { readWorkbookFromFile } = await import('../utils/importExcel');
-  const rows = await readWorkbookFromFile(file);
+export const importRecordsFromExcel = async (postToGas, file, mapRowToRecord) => {
+  const { readWorkbookRowsFromFile } = await import('../features/records/utils/importExcel');
+  const rows = await readWorkbookRowsFromFile(file);
   const normalizedRows = rows
-    .map(normalizeImportedRecord)
+    .map(mapRowToRecord)
     .filter(
       (row) =>
         row.NamaSiswa ||

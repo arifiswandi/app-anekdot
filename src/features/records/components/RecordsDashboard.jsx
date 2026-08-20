@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import '../../../components/Dashboard.css';
-import StatCard from '../../../components/StatCard';
-import ExportButton from '../../../components/ExportButton';
-import { exportWorkbookAsExcel } from '../../../utils/exportExcel';
-import { normalizeImportedRecord } from '../../../utils/excelImport';
+import './RecordsDashboard.css';
+import StatCard from '../../../components/ui/StatCard';
+import ExportButton from '../../../components/ui/ExportButton';
+import { exportWorkbookAsExcel } from '../utils/exportExcel';
+import { mapExcelRowToRecord } from '../utils/excelImport';
 import {
   fetchRecords,
   createRecord,
@@ -13,7 +13,7 @@ import {
 } from '../../../services/dashboardService';
 import RecordFormModal from './RecordFormModal';
 
-const EMPTY_FORM = {
+const INITIAL_RECORD_FORM = {
   ID: '',
   Tanggal: '',
   NamaSiswa: '',
@@ -28,14 +28,14 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
   const [loading, setLoading] = useState(true);
   const [exporting, setExporting] = useState(false);
   const [importing, setImporting] = useState(false);
-  const [formData, setFormData] = useState(EMPTY_FORM);
+  const [formData, setFormData] = useState(INITIAL_RECORD_FORM);
   const [isEditing, setIsEditing] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const fileInputRef = useRef(null);
-  const actionBusy = loading || exporting || importing;
+  const isActionBusy = loading || exporting || importing;
 
   const resetForm = () => {
-    setFormData(EMPTY_FORM);
+    setFormData(INITIAL_RECORD_FORM);
     setIsEditing(false);
     setIsFormOpen(false);
   };
@@ -58,12 +58,12 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleInputChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleFieldChange = (event) => {
+    setFormData((prevState) => ({ ...prevState, [event.target.name]: event.target.value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
     setLoading(true);
     try {
@@ -262,7 +262,7 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
                   <th>Nama Siswa</th>
                   <th>Kelas</th>
                   <th>Kejadian</th>
-                  <th>Penanganan</th>
+                  <th>Tindak Lanjut</th>
                   <th>Keterangan</th>
                 </tr>
               </thead>
@@ -300,7 +300,7 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
     setImporting(true);
 
     try {
-      const importedCount = await importRecordsFromExcel(postToGas, file, normalizeImportedRecord);
+      const importedCount = await importRecordsFromExcel(postToGas, file, mapExcelRowToRecord);
       await loadRecords();
       alert(`${importedCount} data berhasil diimpor dari file Excel.`);
     } catch (error) {
@@ -345,7 +345,7 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
                 label={{ icon: '📥', text: 'Import', loadingText: 'Mengimpor...' }}
                 variant="import"
                 loading={importing}
-                disabled={actionBusy}
+                disabled={isActionBusy}
                 onClick={() => fileInputRef.current?.click()}
               />
 
@@ -353,14 +353,14 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
                 label={{ icon: '📄', text: 'PDF', loadingText: 'Membuat PDF...' }}
                 variant="pdf"
                 loading={exporting}
-                disabled={actionBusy}
+                disabled={isActionBusy}
                 onClick={exportToPdf}
               />
               <ExportButton
                 label={{ icon: '📊', text: 'Excel', loadingText: 'Mengekspor...' }}
                 variant="excel"
                 loading={exporting}
-                disabled={actionBusy}
+                disabled={isActionBusy}
                 onClick={exportToExcel}
               />
               <button type="button" className="primary-button" onClick={openFormModal}>
@@ -369,7 +369,6 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
             </div>
           </div>
 
-          {loading ? <p className="status-text">Memuat data...</p> : (
             <div className="table-wrap">
               <table>
                 <thead>
@@ -382,6 +381,7 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
                     <th>Aksi</th>
                   </tr>
                 </thead>
+                {loading ? (<p className="status-text">Memuat data...</p>) : (
                 <tbody>
                   {records.map((r, index) => (
                     <tr key={index}>
@@ -406,9 +406,9 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
                     </tr>
                   ))}
                 </tbody>
+          )}
               </table>
             </div>
-          )}
         </div>
       </div>
 
@@ -419,7 +419,7 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
         loading={loading}
         onClose={closeFormModal}
         onSubmit={handleSubmit}
-        onChange={handleInputChange}
+        onChange={handleFieldChange}
         onCancel={cancelEdit}
       />
     </div>

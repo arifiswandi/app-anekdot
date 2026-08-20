@@ -1,4 +1,4 @@
-export async function readWorkbookFromFile(file) {
+export async function readWorkbookRowsFromFile(file) {
   if (!file) {
     throw new Error('File Excel belum dipilih.');
   }
@@ -21,3 +21,5 @@ export async function readWorkbookFromFile(file) {
 
   return rows;
 }
+
+export const readWorkbookFromFile = readWorkbookRowsFromFile;
