@@ -27,16 +27,16 @@ export default function Login({ onLogin, postToGas }) {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-shell">
-        <div className="login-hero">
-          <div className="hero-content">
-            <div className="hero-badge">BK</div>
+    <div className="login">
+      <div className="login__shell">
+        <div className="login__hero">
+          <div className="login__content">
+            <div className="login__badge">BK</div>
             <h1>Catatan Anekdot Siswa</h1>
             <p>
               Portal pendataan dan pencatatan perilaku siswa untuk mendukung pelayanan Bimbingan Konseling secara cepat, rapi, dan profesional.
             </p>
-            <ul className="hero-points">
+            <ul className="login__points">
               <li>Input data siswa lebih cepat</li>
               <li>Monitoring perilaku dan penanganan</li>
               <li>Rekap data yang tertata dengan baik</li>
@@ -44,19 +44,19 @@ export default function Login({ onLogin, postToGas }) {
           </div>
         </div>
 
-        <div className="login-card">
-          <div className="login-brand">
-            <div className="school-badge">BK</div>
+        <div className="login__card">
+          <div className="login__brand">
+            <div className="login__school-badge">BK</div>
             <h2>Login Aplikasi BK</h2>
             <p>MTsN 1 Mojokerto | Sistem Catatan Anekdot</p>
           </div>
 
-          <form className="login-form" onSubmit={handleLogin}>
-            <div className="login-field">
+          <form className="login__form" onSubmit={handleLogin}>
+            <div className="login__field">
               <label htmlFor="username">Username</label>
               <input
                 id="username"
-                className="login-input"
+                className="login__input"
                 required
                 type="text"
                 value={username}
@@ -64,11 +64,11 @@ export default function Login({ onLogin, postToGas }) {
               />
             </div>
 
-            <div className="login-field">
+            <div className="login__field">
               <label htmlFor="password">Password</label>
               <input
                 id="password"
-                className="login-input"
+                className="login__input"
                 required
                 type="password"
                 value={password}
@@ -76,7 +76,7 @@ export default function Login({ onLogin, postToGas }) {
               />
             </div>
 
-            <button className="login-button" type="submit" disabled={loading}>
+            <button className="login__button" type="submit" disabled={loading}>
               {loading ? 'Memproses...' : 'Login'}
             </button>
           </form>

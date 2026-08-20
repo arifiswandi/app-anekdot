@@ -313,32 +313,32 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
   };
 
   return (
-    <div className="app-page">
-      <div className="app-shell">
-        <div className="topbar">
-          <div className="brand-wrap">
-            <div className="school-logo">BK</div>
+    <div className="dashboard">
+      <div className="dashboard__shell">
+        <div className="dashboard__topbar">
+          <div className="dashboard__brand">
+            <div className="dashboard__logo">BK</div>
             <div>
-              <h2 className="brand-title">Catatan Anekdot BK</h2>
-              <span className="brand-subtitle">MTsN 1 Mojokerto</span>
+              <h2 className="dashboard__title">Catatan Anekdot BK</h2>
+              <span className="dashboard__subtitle">MTsN 1 Mojokerto</span>
             </div>
           </div>
-          <div className="topbar-right">
-            <span className="user-pill">Halo, {user.username} ({user.role})</span>
-            <button className="logout-button" onClick={onLogout}>Logout</button>
+          <div className="dashboard__actions">
+            <span className="dashboard__user">Halo, {user.username} ({user.role})</span>
+            <button className="dashboard__logout" onClick={onLogout}>Logout</button>
           </div>
         </div>
 
-        <div className="stats-grid">
+        <div className="dashboard__stats">
           <StatCard label="Total Catatan" value={records.length} meta="Data aktif" />
           <StatCard label="Siswa Terdata" value={new Set(records.map((item) => item.NamaSiswa)).size} meta="Unique siswa" />
           <StatCard label="Status Sistem" value="Online" meta="Siap digunakan" />
         </div>
 
-        <div className="panel">
-          <div className="panel-header">
+        <div className="dashboard__panel">
+          <div className="dashboard__panel-header">
             <h3>Daftar Catatan Anekdot</h3>
-            <div className="panel-actions">
+            <div className="dashboard__panel-actions">
               <input ref={fileInputRef} type="file" accept=".xlsx,.xls" hidden onChange={handleImportExcel} />
 
               <ExportButton
@@ -363,41 +363,41 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
                 disabled={isActionBusy}
                 onClick={exportToExcel}
               />
-              <button type="button" className="primary-button" onClick={openFormModal}>
+              <button type="button" className="dashboard__primary-button" onClick={openFormModal}>
                 + Tambah Catatan
               </button>
             </div>
           </div>
 
-            <div className="table-wrap">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Tanggal</th>
-                    <th>Siswa</th>
-                    <th>Kelas</th>
-                    <th>Kejadian</th>
-                    <th>Tindak Lanjut</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                {loading ? (<p className="status-text">Memuat data...</p>) : (
+          <div className="dashboard__table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>Siswa</th>
+                  <th>Kelas</th>
+                  <th>Kejadian</th>
+                  <th>Tindak Lanjut</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              {loading ? (<p className="dashboard__status">Memuat data...</p>) : (
                 <tbody>
                   {records.map((r, index) => (
                     <tr key={index}>
                       <td>{formatDateForInput(r.Tanggal)}</td>
                       <td>{r.NamaSiswa}</td>
                       <td>{r.Kelas}</td>
-                      <td className="table-text">{r.Kejadian}</td>
-                      <td className="table-text">{r.Penanganan}</td>
+                      <td className="dashboard__table-text">{r.Kejadian}</td>
+                      <td className="dashboard__table-text">{r.Penanganan}</td>
                       <td>
-                        <div className="table-actions">
-                          <button type="button" className="table-action" onClick={() => handleEdit(r)}>
+                        <div className="dashboard__table-actions">
+                          <button type="button" className="dashboard__table-action" onClick={() => handleEdit(r)}>
                             ✏️ Edit
                           </button>
 
                           {user.role === 'superuser' && (
-                            <button type="button" className="danger-button" onClick={() => handleDelete(r.ID)}>
+                            <button type="button" className="dashboard__danger-button" onClick={() => handleDelete(r.ID)}>
                               🗑️ Hapus
                             </button>
                           )}
@@ -406,9 +406,9 @@ export default function RecordsDashboard({ user, onLogout, postToGas }) {
                     </tr>
                   ))}
                 </tbody>
-          )}
-              </table>
-            </div>
+              )}
+            </table>
+          </div>
         </div>
       </div>
 

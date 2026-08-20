@@ -8,14 +8,14 @@ export default function ExportButton({
   disabled = false,
 }) {
   const resolvedLabel = typeof label === 'string' ? { text: label } : label;
-  const className = `export-button ${
+  const className = `export-button export-button--${
     variant === 'excel'
-      ? 'excel-button'
+      ? 'excel'
       : variant === 'pdf'
-        ? 'pdf-button'
+        ? 'pdf'
         : variant === 'import'
-          ? 'import-button'
-          : 'default-button'
+          ? 'import'
+          : 'default'
   }`;
 
   return (
@@ -26,8 +26,8 @@ export default function ExportButton({
       disabled={disabled || loading}
       aria-busy={loading ? 'true' : 'false'}
     >
-      <span className="button-content">
-        <span className={`button-icon ${loading ? 'is-loading' : ''}`} aria-hidden="true">
+      <span className="export-button__content">
+        <span className={`export-button__icon ${loading ? 'export-button__icon--loading' : ''}`} aria-hidden="true">
           {loading ? '⏳' : resolvedLabel.icon || '•'}
         </span>
         <span>{loading ? resolvedLabel.loadingText || 'Memproses...' : resolvedLabel.text}</span>
